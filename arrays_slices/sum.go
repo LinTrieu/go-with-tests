@@ -1,5 +1,10 @@
 package main
 
-func sum(numbers [2]int) int {
-	return 0
+func Sum(numbers []int) int {
+	var total int
+
+	for _, number := range numbers {
+		total += number
+	}
+	return total
 }
