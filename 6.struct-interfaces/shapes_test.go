@@ -34,5 +34,8 @@ func TestArea(t *testing.T) {
 		circle := Circle{10}
 		checkArea(t, circle, 314.1592653589793)
 	})
+}
+
+func TestAreaInter(t *testing.T) {
 
 }
