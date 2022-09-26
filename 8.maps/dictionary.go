@@ -30,6 +30,7 @@ func (d Dictionary) Add(word string, definition string) error {
 
 func (d Dictionary) Update(word, definition string) error {
 	_, err := d.Search(word)
+
 	switch err {
 	case ErrNotFound:
 		return ErrWordDoesNotExist
@@ -40,4 +41,8 @@ func (d Dictionary) Update(word, definition string) error {
 	}
 
 	return nil
+}
+
+func (d Dictionary) Delete(word string) {
+	delete(d, word)
 }
