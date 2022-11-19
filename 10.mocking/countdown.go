@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 )
 
 func main() {
@@ -13,5 +14,10 @@ func main() {
 }
 
 func Countdown(out io.Writer) {
-	fmt.Fprint(out, "3")
+	for i := 3; i > 0; i-- {
+		fmt.Fprint(out, i)
+		fmt.Fprint(out, "\n")
+		time.Sleep(1 * time.Second)
+	}
+	fmt.Fprint(out, "Go!")
 }
