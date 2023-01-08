@@ -39,4 +39,11 @@ func (d *DefaultSleeper) Sleep() {
 	time.Sleep(1 * time.Second)
 }
 
-// TODO: https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/mocking#still-some-problems
+type ConfigurableSleeper struct {
+	duration time.Duration
+	sleep    func(time.Duration)
+}
+
+func (c *ConfigurableSleeper) Sleep() {
+	c.sleep(c.duration)
+}

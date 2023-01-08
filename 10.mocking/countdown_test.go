@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"reflect"
 	"testing"
+	"time"
 )
 
 // Spies are mocks to record how a dependency is used (record arguments, count calls, etc.)
@@ -26,6 +27,26 @@ func (s *SpyCountdownOperations) Write(p []byte) (n int, err error) {
 
 const write = "write"
 const sleep = "sleep"
+
+type SpyTime struct {
+	durationSlept time.Duration
+}
+
+func (s *SpyTime) Sleep(duration time.Duration) {
+	s.durationSlept = duration
+}
+
+func TestConfigurableSleeper(t *testing.T) {
+	sleepTime := 5 * time.Second
+
+	spyTime := &SpyTime{}
+	sleeper := ConfigurableSleeper{sleepTime, spyTime.Sleep}
+	sleeper.Sleep()
+
+	if spyTime.durationSlept != sleepTime {
+		t.Errorf("should have slept for %v, but slept for %v", sleepTime, spyTime.durationSlept)
+	}
+}
 
 // Our software needs to print to stdout
 // The bytes.Buffer type implements the Writer interface
