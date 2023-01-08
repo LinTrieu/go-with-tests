@@ -36,18 +36,6 @@ func (s *SpyTime) Sleep(duration time.Duration) {
 	s.durationSlept = duration
 }
 
-func TestConfigurableSleeper(t *testing.T) {
-	sleepTime := 5 * time.Second
-
-	spyTime := &SpyTime{}
-	sleeper := ConfigurableSleeper{sleepTime, spyTime.Sleep}
-	sleeper.Sleep()
-
-	if spyTime.durationSlept != sleepTime {
-		t.Errorf("should have slept for %v, but slept for %v", sleepTime, spyTime.durationSlept)
-	}
-}
-
 // Our software needs to print to stdout
 // The bytes.Buffer type implements the Writer interface
 // So we'll use it in our test to send in as our Writer and then we can check what was written to it after we invoke Countrdown
@@ -85,4 +73,16 @@ Go!`
 			t.Errorf("wanted calls %v got %v", want, spySleepPrinter.Calls)
 		}
 	})
+}
+
+func TestConfigurableSleeper(t *testing.T) {
+	sleepTime := 5 * time.Second
+
+	spyTime := &SpyTime{}
+	sleeper := ConfigurableSleeper{sleepTime, spyTime.Sleep}
+	sleeper.Sleep()
+
+	if spyTime.durationSlept != sleepTime {
+		t.Errorf("should have slept for %v, but slept for %v", sleepTime, spyTime.durationSlept)
+	}
 }
